@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Personal overrides; .claude/settings.json is committed
+.claude/settings.local.json
+
+# Hayabusa error logs (written relative to cwd when run by hand;
+# the server redirects these to a temp dir)
+logs/
+
+# Downloaded at setup time, not source
+hayabusa/
+samples/
