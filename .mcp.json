@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "hayabusa": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["server.py"],
+      "env": {}
+    }
+  }
+}

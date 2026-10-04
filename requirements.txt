@@ -1,0 +1,12 @@
+# MCP server SDK. In 2.x the server class is MCPServer
+#   (from mcp.server.mcpserver import MCPServer)
+# -- FastMCP was renamed; mcp.server.fastmcp no longer exists. Pin 'mcp<2'
+# only if you deliberately want the old v1 API.
+# Pulls pydantic, anyio, starlette and uvicorn transitively -- don't list those here.
+mcp>=2.3.0
+
+# No other runtime dependencies:
+#   - Hayabusa is invoked as an external binary via stdlib `subprocess`
+#   - Its JSON/JSONL and CSV output parse with stdlib `json` / `csv`
+#   - Hayabusa itself is NOT a pip package; install the CLI separately from
+#     https://github.com/Yamato-Security/hayabusa/releases
