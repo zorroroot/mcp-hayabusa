@@ -1,0 +1,8 @@
+# Normalize to LF in the repo; Git still checks out CRLF on Windows where
+# core.autocrlf says so. Keeps diffs clean across Windows/macOS/Linux.
+* text=auto eol=lf
+
+# Binary: never touch line endings.
+*.evtx binary
+*.exe  binary
+*.zip  binary
