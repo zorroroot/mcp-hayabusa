@@ -51,7 +51,11 @@ def test_scan_directory() -> None:
 
     assert result["events_scanned"], "no events were read from the samples"
     assert result["finding_count"] > 0, "attack samples produced no detections"
-    assert not result["warnings"], result["warnings"]
+    assert result["backend"] in ("windows", "wsl"), result["backend"]
+    # A backend fallback is expected where Application Control blocks the
+    # native binary. Any *other* warning on clean samples is a real problem.
+    unexpected = [w for w in result["warnings"] if not w.startswith("Fell back")]
+    assert not unexpected, unexpected
     assert sum(result["severity_counts"].values()) == result["finding_count"]
 
     # Every reported level must be one we rank; an unranked level would mean
