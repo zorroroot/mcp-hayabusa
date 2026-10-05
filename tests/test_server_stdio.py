@@ -135,8 +135,8 @@ def test_wsl_path_translation() -> None:
         _skip("drive-letter mapping only applies on Windows")
         return
 
-    got = to_wsl_path(r"C:\Users\aungk\mcp-hayabusa\samples\a.evtx")
-    assert got == "/mnt/c/Users/aungk/mcp-hayabusa/samples/a.evtx", got
+    got = to_wsl_path(r"C:\Users\analyst\mcp-hayabusa\samples\a.evtx")
+    assert got == "/mnt/c/Users/analyst/mcp-hayabusa/samples/a.evtx", got
 
     # Drive letter lowercased, separators flipped, no backslashes left.
     assert to_wsl_path(r"C:\Temp").startswith("/mnt/c/"), to_wsl_path(r"C:\Temp")
