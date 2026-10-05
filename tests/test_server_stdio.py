@@ -110,7 +110,85 @@ def test_level_normalization() -> None:
     assert RANK["emergency"] > RANK["critical"]
 
 
+def _skip(msg: str) -> None:
+    """Skip under pytest; a no-op when run as a plain script."""
+    try:
+        import pytest
+    except ImportError:
+        return
+    pytest.skip(msg)
+
+
+def test_wsl_path_translation() -> None:
+    """Windows -> WSL path mapping, the core new logic in the WSL backend.
+
+    Pure and fixture-free: no WSL involved. A wrong mapping hands Hayabusa a
+    path that does not exist inside the distro, so it is worth pinning.
+    """
+    import os
+
+    from mcp.server.mcpserver.exceptions import ToolError
+
+    from server import to_wsl_path
+
+    if os.name != "nt":
+        _skip("drive-letter mapping only applies on Windows")
+        return
+
+    got = to_wsl_path(r"C:\Users\aungk\mcp-hayabusa\samples\a.evtx")
+    assert got == "/mnt/c/Users/aungk/mcp-hayabusa/samples/a.evtx", got
+
+    # Drive letter lowercased, separators flipped, no backslashes left.
+    assert to_wsl_path(r"C:\Temp").startswith("/mnt/c/"), to_wsl_path(r"C:\Temp")
+    assert "\\" not in to_wsl_path(r"C:\a\b\c")
+
+    # A UNC path has no /mnt equivalent, so it must raise rather than return a
+    # path that silently does not exist inside WSL.
+    try:
+        to_wsl_path(r"\\server\share\x.evtx")
+    except ToolError as exc:
+        assert "drive-letter" in str(exc), exc
+    else:
+        raise AssertionError("expected ToolError for a UNC path")
+
+
+def test_backend_order() -> None:
+    """MCP_HAYABUSA_BACKEND picks a backend; anything else is rejected."""
+    import os
+
+    from mcp.server.mcpserver.exceptions import ToolError
+
+    from server import _backend_order
+
+    original = os.environ.get("MCP_HAYABUSA_BACKEND")
+    try:
+        for value, expected in (("windows", ["windows"]), ("wsl", ["wsl"]),
+                                ("WSL", ["wsl"])):
+            os.environ["MCP_HAYABUSA_BACKEND"] = value
+            assert _backend_order() == expected, (value, _backend_order())
+
+        # auto must try native first, so the native path resumes by itself if
+        # the Application Control policy is ever lifted.
+        os.environ["MCP_HAYABUSA_BACKEND"] = "auto"
+        assert _backend_order()[0] == "windows", _backend_order()
+
+        os.environ["MCP_HAYABUSA_BACKEND"] = "nonsense"
+        try:
+            _backend_order()
+        except ToolError:
+            pass
+        else:
+            raise AssertionError("expected ToolError for an invalid backend")
+    finally:
+        if original is None:
+            os.environ.pop("MCP_HAYABUSA_BACKEND", None)
+        else:
+            os.environ["MCP_HAYABUSA_BACKEND"] = original
+
+
 if __name__ == "__main__":
     test_server_stdio()
     test_level_normalization()
-    print("ok: handshake, tool listing, schema, error paths, level ranking")
+    test_wsl_path_translation()
+    test_backend_order()
+    print("ok: handshake, schema, error paths, level ranking, WSL paths, backends")
