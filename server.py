@@ -294,7 +294,8 @@ def scan_evtx(
     return the detections as structured JSON. Optionally filter to detections
     at or above a minimum severity level.
     """
-    target = Path(path).expanduser()
+    # Absolute: Hayabusa runs with a temp-dir cwd, so a relative path would miss.
+    target = Path(path).expanduser().resolve()
     if not target.exists():
         raise ToolError(f"No such file or directory: {path}")
 
