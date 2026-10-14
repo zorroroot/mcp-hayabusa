@@ -2,8 +2,12 @@
 #   (from mcp.server.mcpserver import MCPServer)
 # -- FastMCP was renamed; mcp.server.fastmcp no longer exists. Pin 'mcp<2'
 # only if you deliberately want the old v1 API.
-# Pulls pydantic, anyio, starlette and uvicorn transitively -- don't list those here.
+# Pulls anyio, starlette and uvicorn transitively -- don't list those here.
 mcp>=2.3.0
+
+# Imported directly by server.py (Annotated[..., Field(...)] param docs).
+# mcp already requires it; listed so the direct dependency is explicit.
+pydantic>=2
 
 # No other runtime dependencies:
 #   - Hayabusa is invoked as an external binary via stdlib `subprocess`
