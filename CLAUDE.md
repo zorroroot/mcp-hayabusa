@@ -32,10 +32,10 @@ MCP servers are **defined in `.mcp.json`, not `.claude/settings.json`** — the 
 
 ## Tests
 
-`pytest` from the project root runs both suites in ~30s (8 tests; most of that is real Hayabusa scans). Run one test with `pytest tests/test_server_stdio.py::test_backend_order`. `pytest.ini` sets `testpaths = tests` and `pythonpath = .`. Each file also runs standalone with `python tests/<file>.py` — the test functions are sync and own their event loop, so no async plugin is needed, and `test_scan_samples.py` prints a summary report in that mode. pytest lives in `requirements-dev.txt`, not `requirements.txt`.
+`pytest` from the project root runs both suites in ~30s (11 tests; most of that is real Hayabusa scans). Run one test with `pytest tests/test_server_stdio.py::test_backend_order`. `pytest.ini` sets `testpaths = tests` and `pythonpath = .`. Each file also runs standalone with `python tests/<file>.py` — the test functions are sync and own their event loop, so no async plugin is needed, and `test_scan_samples.py` prints a summary report in that mode. pytest lives in `requirements-dev.txt`, not `requirements.txt`.
 
 - **`tests/test_server_stdio.py`** — spawns `server.py` as a subprocess and drives it with a real MCP client: handshake, tool listing, input schema, error paths, level normalization, WSL path translation, backend ordering. Deliberately **fixture-free**, so it runs anywhere.
-- **`tests/test_scan_samples.py`** — imports `server.py` in-process and scans real attack samples from `./samples/`. Skips (3 tests) with a fetch instruction if the samples are absent, so a fresh clone passes.
+- **`tests/test_scan_samples.py`** — imports `server.py` in-process and scans real attack samples from `./samples/`. Skips (6 tests) with a fetch instruction if the samples are absent, so a fresh clone passes.
 
 `scripts/fetch_samples.py` pulls EVTX captures from [EVTX-ATTACK-SAMPLES](https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES) (ATT&CK-mapped attack simulations) into `./samples/` — 2 per category by default (~1.4 MB), `--all` for all 278 (~49 MB). Files are chosen by rule (smallest N per category), not a hardcoded list, so it survives upstream changes; a magic-byte check rejects anything that isn't really an EVTX.
 
@@ -54,7 +54,9 @@ Everything lives in `server.py`; `scripts/` are setup-only. One call to `scan_ev
 2. For each backend from `_backend_order()`, `_build_argv()` produces argv + cwd (the windows path reads the binary from the manifest via `hayabusa_binary()`; the wsl path uses `wsl_hayabusa()` and `to_wsl_path()`). `OSError` or a `ToolError` from argv building moves on to the next backend; a timeout (`SCAN_TIMEOUT_SECONDS` = 900) or non-zero exit is fatal.
 3. `_read_findings()` parses the JSONL output file; stdout is used only for the `Events with hits / Total events` counts.
 4. Results are **re-filtered in Python** by `normalize_level()` regardless of `--min-level`. Unrecognized levels are kept, never dropped, and reported in `warnings`.
-5. The response is capped at `MAX_FINDINGS` (1000) with `truncated: true`. `finding_count` and `severity_counts` reflect the full set.
+5. `rule_filter` is applied in Python too: **every rule still runs**, and a finding is kept if the case-insensitive term appears in its RuleTitle, RuleFile, MITRE tactics, MitreTags or OtherTags. Hayabusa has no substring rule selector (`--include-tag` needs exact tags), and building a subset rules dir would break the WSL backend. That metadata only exists in the **`--profile verbose`** output, which also adds `EvtxFile`. Tactics come back **abbreviated** (`LatMov`, `CredAccess`), so `MITRE_TACTICS` expands them; otherwise "lateral" matches nothing.
+6. `max_results` (1–`MAX_FINDINGS`, default 1000) caps the returned findings, keeping the **most severe** and not the earliest, and returns them in timestamp order (a directory scan comes back file by file, not globally by time). `truncated: true` marks a cut. `finding_count`, `severity_counts` and the `rules` rollup reflect the full filtered set.
+7. `output_format`: `summary` (default) returns a per-rule `rules` rollup plus slim rows (`SUMMARY_FIELDS`, with EvtxFile cut to its name). `full` returns every Hayabusa field. On the 20 samples, summary is ~79 KB and full ~229 KB.
 
 ## Hayabusa backends (windows / wsl)
 

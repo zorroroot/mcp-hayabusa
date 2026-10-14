@@ -49,6 +49,8 @@ async def _collect() -> dict[str, Any]:
             for label, args in {
                 "bad_path": {"path": "does-not-exist.evtx"},
                 "bad_severity": {"path": ".", "min_severity": "bogus"},
+                "bad_format": {"path": ".", "output_format": "bogus"},
+                "bad_max_results": {"path": ".", "max_results": 0},
             }.items():
                 res = await session.call_tool("scan_evtx", args)
                 calls[label] = (res.is_error, res.content[0].text)
@@ -74,14 +76,21 @@ def test_server_stdio() -> None:
     assert schema["properties"]["min_severity"]["enum"] == SEVERITIES, schema["properties"]
     # Params must carry descriptions: a decorator `description=` would override
     # the docstring and leave these blank.
-    for prop in ("path", "min_severity"):
+    assert schema["properties"]["output_format"]["enum"] == ["summary", "full"]
+    # Params must carry descriptions: a decorator `description=` would override
+    # the docstring and leave these blank.
+    for prop in ("path", "min_severity", "rule_filter", "output_format", "max_results"):
         assert schema["properties"][prop].get("description"), f"{prop} has no description"
 
     is_error, text = got["calls"]["bad_path"]
     assert is_error and "No such file or directory" in text, text
 
-    is_error, text = got["calls"]["bad_severity"]
-    assert is_error and "Input should be" in text, text
+    for label in ("bad_severity", "bad_format"):
+        is_error, text = got["calls"][label]
+        assert is_error and "Input should be" in text, (label, text)
+
+    is_error, text = got["calls"]["bad_max_results"]
+    assert is_error and "greater than or equal to 1" in text, text
 
     assert got["alive"], "server did not survive the failed calls"
 

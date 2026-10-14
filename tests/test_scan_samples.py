@@ -85,6 +85,54 @@ def test_single_file_detects_log_clearing() -> None:
     assert any("clear" in t.lower() for t in titles), titles
 
 
+def test_rule_filter_matches_abbreviated_tactics() -> None:
+    """'lateral' must match via the expanded tactic: Hayabusa reports `LatMov`,
+    and none of the RDP rule titles contain the word."""
+    _require_samples()
+    everything = scan_evtx(str(SAMPLES))
+    lateral = scan_evtx(str(SAMPLES), rule_filter="lateral")
+
+    assert 0 < lateral["finding_count"] < everything["finding_count"], (
+        lateral["finding_count"], everything["finding_count"])
+    titles = {r["rule_title"] for r in lateral["rules"]}
+    assert any("RDP" in t for t in titles), titles
+    assert "Pass the Hash Activity 2" in titles, titles
+    assert sum(r["count"] for r in lateral["rules"]) == lateral["finding_count"]
+
+
+def test_max_results_keeps_most_severe() -> None:
+    """A limit trims what is returned, never what is counted, and the cut keeps
+    the most severe findings rather than the earliest."""
+    _require_samples()
+    result = scan_evtx(str(SAMPLES), max_results=10)
+
+    assert len(result["findings"]) == 10, len(result["findings"])
+    assert result["truncated"]
+    assert result["finding_count"] > 10
+    assert sum(r["count"] for r in result["rules"]) == result["finding_count"]
+    assert {f["Level"] for f in result["findings"]} == {"high"}, result["findings"]
+    stamps = [f["Timestamp"] for f in result["findings"]]
+    assert stamps == sorted(stamps), "returned findings are not in time order"
+
+
+def test_output_formats() -> None:
+    """summary rows are slim and say which file they came from; full keeps all."""
+    _require_samples()
+    sample = SAMPLES / "Defense_Evasion__DE_104_system_log_cleared.evtx"
+    if not sample.exists():
+        _skip(f"{sample.name} not in ./samples/")
+
+    summary = scan_evtx(str(sample))
+    full = scan_evtx(str(sample), output_format="full")
+
+    assert summary["output_format"] == "summary" and "rules" in summary
+    assert "rules" not in full
+    assert summary["findings"] and full["findings"]
+    assert "Details" not in summary["findings"][0], summary["findings"][0]
+    assert "Details" in full["findings"][0], full["findings"][0]
+    assert summary["findings"][0]["EvtxFile"].endswith(sample.name)
+
+
 def test_missing_file_raises() -> None:
     from mcp.server.mcpserver.exceptions import ToolError
     try:
@@ -127,6 +175,9 @@ if __name__ == "__main__":
     test_scan_directory()
     test_severity_filter_is_monotonic()
     test_single_file_detects_log_clearing()
+    test_rule_filter_matches_abbreviated_tactics()
+    test_max_results_keeps_most_severe()
+    test_output_formats()
     test_missing_file_raises()
     _report()
     print("\nok: all checks passed")
