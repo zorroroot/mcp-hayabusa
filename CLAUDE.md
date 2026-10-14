@@ -14,7 +14,7 @@ pip install -r requirements-dev.txt   # the above plus pytest
 python scripts/fetch_hayabusa.py      # Hayabusa release -> ./hayabusa/
 python server.py                      # stdio server; waits for an MCP client on stdin (not interactive)
 python scripts/fetch_samples.py       # attack-sample EVTX files -> ./samples/
-pytest                                # both suites (~50s via WSL)
+pytest                                # both suites (~30s)
 ```
 
 `fetch_hayabusa.py` resolves the right release asset for the host platform from the GitHub API and unpacks it. Useful flags: `--tag v4.1.0` to pin a release, `--force` to replace an existing `./hayabusa/`, `--platform <slug>` to override detection, `--dest` to extract elsewhere. Set `GITHUB_TOKEN` if you hit the unauthenticated 60-requests/hour API limit.
@@ -32,7 +32,7 @@ MCP servers are **defined in `.mcp.json`, not `.claude/settings.json`** — the 
 
 ## Tests
 
-`pytest` from the project root runs both suites in ~50s (8 tests; most of that is real scans through WSL). Run one test with `pytest tests/test_server_stdio.py::test_backend_order`. `pytest.ini` sets `testpaths = tests` and `pythonpath = .`. Each file also runs standalone with `python tests/<file>.py` — the test functions are sync and own their event loop, so no async plugin is needed, and `test_scan_samples.py` prints a summary report in that mode. pytest lives in `requirements-dev.txt`, not `requirements.txt`.
+`pytest` from the project root runs both suites in ~30s (8 tests; most of that is real Hayabusa scans). Run one test with `pytest tests/test_server_stdio.py::test_backend_order`. `pytest.ini` sets `testpaths = tests` and `pythonpath = .`. Each file also runs standalone with `python tests/<file>.py` — the test functions are sync and own their event loop, so no async plugin is needed, and `test_scan_samples.py` prints a summary report in that mode. pytest lives in `requirements-dev.txt`, not `requirements.txt`.
 
 - **`tests/test_server_stdio.py`** — spawns `server.py` as a subprocess and drives it with a real MCP client: handshake, tool listing, input schema, error paths, level normalization, WSL path translation, backend ordering. Deliberately **fixture-free**, so it runs anywhere.
 - **`tests/test_scan_samples.py`** — imports `server.py` in-process and scans real attack samples from `./samples/`. Skips (3 tests) with a fetch instruction if the samples are absent, so a fresh clone passes.
@@ -65,7 +65,7 @@ Everything lives in `server.py`; `scripts/` are setup-only. One call to `scan_ev
 
 Default is `auto`: try native, then fall back to WSL **only** on `OSError` with `winerror == 4551` -- Windows Application Control (Smart App Control) refusing to execute the unsigned binary. Native is tried first deliberately, so the native path resumes by itself if the policy is ever lifted. A fallback is reported in the response's `warnings`, and the chosen backend is always in `backend`. Force one with `MCP_HAYABUSA_BACKEND=windows|wsl`.
 
-**This machine as of 2026-10-05:** Smart App Control is ON and enforced (`VerifiedAndReputablePolicyState=1`), Hayabusa's binary is `NotSigned`, so the native backend always fails here and every scan goes through WSL. Turning SAC off is irreversible without reinstalling Windows -- don't.
+**This machine as of 2026-10-15:** Smart App Control is OFF, so the native backend runs and scans report `backend: "windows"`; the WSL fallback is not exercised by the test suite here (force it with `MCP_HAYABUSA_BACKEND=wsl` to check it). From 2026-10-05 until then SAC was ON and blocked the `NotSigned` binary, so every scan went through WSL. SAC cannot be re-enabled without reinstalling Windows, so the WSL backend matters for machines where it is still on.
 
 ### WSL setup
 
@@ -82,7 +82,7 @@ Keep the binary and its rules on **ext4** (`~/hayabusa`), not on `/mnt/c`: Hayab
 - **`wsl.exe --cd /mnt/c/...` fails from Git Bash** but works from Python. MSYS rewrites leading-`/` arguments into Windows paths before `wsl.exe` sees them. Test WSL invocations through `subprocess`, not the Bash tool.
 - **`wsl.exe` emits UTF-16 on some paths**, leaving NUL bytes in captured output. Both `wsl_hayabusa()` and the scan path strip `\x00`.
 - **`~` needs a Linux shell to expand**, so `wsl_hayabusa()` goes through `bash -lc` and returns `$PWD` plus the manifest in one round trip. Cached -- each call is otherwise a distro round trip.
-- Backend equivalence is verified: WSL returns the same counts the native backend did before SAC (261 events; 229/46/24 findings at informational/medium/high).
+- Backend equivalence is verified: WSL returns the same counts as the native backend (261 events; 229/46/24 findings at informational/medium/high).
 
 ## How scan_evtx runs Hayabusa
 
