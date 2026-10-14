@@ -25,7 +25,7 @@ Environment as of 2026-10-04: Python 3.14.5, pip 26.1.1. `mcp` 2.3.0 is installe
 
 MCP servers are **defined in `.mcp.json`, not `.claude/settings.json`** — the settings schema has no key for declaring one. The two files do different jobs:
 
-- **`.mcp.json`** declares the server: `hayabusa`, `python server.py`, stdio. `args` is relative, so Claude Code must launch it with the project root as cwd. If it fails to start, switch to absolute paths for both the interpreter and the script.
+- **`.mcp.json`** declares the server: `hayabusa`, `python ${CLAUDE_PROJECT_DIR:-.}/server.py`, stdio. There is no documented `cwd` field for stdio servers and the launch cwd isn't guaranteed, so the script path is anchored on `CLAUDE_PROJECT_DIR`, which Claude Code sets to the project root (the `:-.` falls back to cwd if it's unset). `server.py` resolves `./hayabusa/` from `__file__`, so it doesn't depend on cwd either. `python` must be on PATH; if it isn't, put an absolute interpreter path in `command`.
 - **`.claude/settings.json`** carries `enabledMcpjsonServers: ["hayabusa"]`, which pre-approves it so the trust prompt is skipped. (`enableAllProjectMcpServers: true` would approve every entry instead.)
 
 `.claude/settings.json` is committed; `.claude/settings.local.json` is gitignored for personal overrides. Changes to either need a Claude Code restart; check with `/mcp`.

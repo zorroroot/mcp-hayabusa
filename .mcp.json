@@ -3,7 +3,7 @@
     "hayabusa": {
       "type": "stdio",
       "command": "python",
-      "args": ["server.py"],
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/server.py"],
       "env": {}
     }
   }
