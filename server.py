@@ -48,6 +48,12 @@ Severity = Literal["informational", "low", "medium", "high", "critical", "emerge
 HAYABUSA_DIR = Path(__file__).parent / "hayabusa"
 MANIFEST = HAYABUSA_DIR / ".hayabusa-release.json"
 
+# scan_evtx paths come from the model, so they can come from a prompt or from
+# text inside the logs being analyzed. Only these roots may be scanned:
+# MCP_HAYABUSA_ALLOWED_ROOTS, os.pathsep-separated (`;` on Windows), or `*`
+# to allow any path. Unset, it is just ./samples -- secure by default.
+DEFAULT_ALLOWED_ROOT = Path(__file__).parent / "samples"
+
 # Windows Application Control (Smart App Control / WDAC) refusing to execute an
 # unsigned binary. Surfaces as OSError with this .winerror -- the trigger for
 # falling back to WSL.
@@ -216,6 +222,42 @@ def wsl_hayabusa() -> tuple[str, str]:
     resolved = (f"{directory}/{binary}", f"{directory}/rules")
     _wsl_cache[WSL_DIR] = resolved
     return resolved
+
+
+def allowed_roots() -> list[Path] | None:
+    """The roots scan_evtx may read under, or None for unrestricted (`*`).
+
+    Read per call, like MCP_HAYABUSA_BACKEND, so tests can change it.
+    """
+    raw = os.environ.get("MCP_HAYABUSA_ALLOWED_ROOTS", "").strip()
+    if raw == "*":
+        return None
+    if not raw:
+        return [DEFAULT_ALLOWED_ROOT.resolve()]
+    return [Path(p.strip()).expanduser().resolve()
+            for p in raw.split(os.pathsep) if p.strip()]
+
+
+def check_allowed(target: Path) -> None:
+    """Raise ToolError unless `target` (already resolved) is under an allowed root.
+
+    `target` must come from Path.resolve(), which collapses `..` and follows
+    symlinks and junctions, so neither can step outside a root. Containment is
+    by path components, not string prefix: `samples-evil` is not under
+    `samples`. On Windows the comparison is case-insensitive, as the
+    filesystem is.
+    """
+    roots = allowed_roots()
+    if roots is None:
+        return
+    if any(target == root or root in target.parents for root in roots):
+        return
+    raise ToolError(
+        f"{target} is outside the allowed scan roots: "
+        f"{', '.join(str(r) for r in roots)}. To allow it, add its folder to "
+        f"MCP_HAYABUSA_ALLOWED_ROOTS (separated by {os.pathsep!r}) in the "
+        f"server's env config, or set it to * to allow any path."
+    )
 
 
 def _backend_order() -> list[str]:
@@ -390,7 +432,11 @@ def _read_findings(path: Path) -> tuple[list[dict[str, Any]], int]:
 @server.tool(name="scan_evtx")
 def scan_evtx(
     path: Annotated[str, Field(
-        description="Path to a single .evtx file, or a directory containing them.",
+        description=(
+            "Absolute path to a single .evtx file, or a directory containing "
+            "them. Must be under one of the server's allowed scan roots; the "
+            "error for a disallowed path lists them."
+        ),
     )],
     min_severity: Annotated[Severity, Field(
         description=(
@@ -432,6 +478,9 @@ def scan_evtx(
     term = (rule_filter or "").strip()
     # Absolute: Hayabusa runs with a temp-dir cwd, so a relative path would miss.
     target = Path(path).expanduser().resolve()
+    # Before the existence check, so the error does not reveal whether a path
+    # outside the roots exists.
+    check_allowed(target)
     if not target.exists():
         raise ToolError(f"No such file or directory: {path}")
 

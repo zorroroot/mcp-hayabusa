@@ -47,7 +47,11 @@ async def _collect() -> dict[str, Any]:
 
             calls = {}
             for label, args in {
-                "bad_path": {"path": "does-not-exist.evtx"},
+                # Under ./samples (the default allowed root), so it gets past
+                # the root check and fails on existence.
+                "bad_path": {"path": "samples/does-not-exist.evtx"},
+                "outside_roots": {"path": str(SERVER)},
+                "traversal": {"path": "samples/../server.py"},
                 "bad_severity": {"path": ".", "min_severity": "bogus"},
                 "bad_format": {"path": ".", "output_format": "bogus"},
                 "bad_max_results": {"path": ".", "max_results": 0},
@@ -84,6 +88,12 @@ def test_server_stdio() -> None:
 
     is_error, text = got["calls"]["bad_path"]
     assert is_error and "No such file or directory" in text, text
+
+    # The client passes the server only a minimal environment, so
+    # MCP_HAYABUSA_ALLOWED_ROOTS is unset there and the default root applies.
+    for label in ("outside_roots", "traversal"):
+        is_error, text = got["calls"][label]
+        assert is_error and "outside the allowed scan roots" in text, (label, text)
 
     for label in ("bad_severity", "bad_format"):
         is_error, text = got["calls"][label]
@@ -195,9 +205,64 @@ def test_backend_order() -> None:
             os.environ["MCP_HAYABUSA_BACKEND"] = original
 
 
+def test_allowed_roots() -> None:
+    """Path containment for scan_evtx: by components, after resolve()."""
+    import os
+    import tempfile
+
+    from mcp.server.mcpserver.exceptions import ToolError
+
+    from server import DEFAULT_ALLOWED_ROOT, allowed_roots, check_allowed
+
+    def allowed(path: Path) -> bool:
+        try:
+            check_allowed(path.resolve())
+        except ToolError:
+            return False
+        return True
+
+    original = os.environ.get("MCP_HAYABUSA_ALLOWED_ROOTS")
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            root, other = base / "evidence", base / "other"
+            os.environ["MCP_HAYABUSA_ALLOWED_ROOTS"] = str(root)
+
+            assert allowed(root)
+            assert allowed(root / "case1" / "Security.evtx")
+            assert not allowed(other / "x.evtx")
+            assert not allowed(root / ".." / "other" / "x.evtx"), "traversal escaped"
+            # A string-prefix check would wrongly accept this sibling.
+            assert not allowed(base / "evidence-evil" / "x.evtx"), "prefix match"
+            assert not allowed(base)
+            if os.name == "nt":
+                # NTFS is case-insensitive, so the check must be too.
+                assert allowed(Path(str(root).upper()) / "x.evtx")
+
+            # Several roots, os.pathsep-separated; blanks ignored.
+            os.environ["MCP_HAYABUSA_ALLOWED_ROOTS"] = (
+                f"{root}{os.pathsep}{os.pathsep} {other} ")
+            assert allowed(root / "a.evtx") and allowed(other / "b.evtx")
+
+            os.environ["MCP_HAYABUSA_ALLOWED_ROOTS"] = "*"
+            assert allowed_roots() is None and allowed(base)
+
+        os.environ.pop("MCP_HAYABUSA_ALLOWED_ROOTS")
+        assert allowed_roots() == [DEFAULT_ALLOWED_ROOT.resolve()]
+        assert allowed(DEFAULT_ALLOWED_ROOT / "a.evtx")
+        assert not allowed(PROJECT / "server.py")
+    finally:
+        if original is None:
+            os.environ.pop("MCP_HAYABUSA_ALLOWED_ROOTS", None)
+        else:
+            os.environ["MCP_HAYABUSA_ALLOWED_ROOTS"] = original
+
+
 if __name__ == "__main__":
     test_server_stdio()
     test_level_normalization()
     test_wsl_path_translation()
     test_backend_order()
-    print("ok: handshake, schema, error paths, level ranking, WSL paths, backends")
+    test_allowed_roots()
+    print("ok: handshake, schema, error paths, level ranking, WSL paths, "
+          "backends, allowed roots")
