@@ -1,0 +1,3261 @@
+{
+  "target": "./samples",
+  "backend": "windows",
+  "min_severity": "informational",
+  "rule_filter": null,
+  "output_format": "summary",
+  "max_results": 1000,
+  "events_scanned": 261,
+  "events_with_hits": 148,
+  "finding_count": 229,
+  "severity_counts": {
+    "high": 24,
+    "medium": 22,
+    "low": 34,
+    "informational": 149
+  },
+  "rules": [
+    {
+      "rule_title": "Proc Exec (Sysmon Alert)",
+      "level": "high",
+      "count": 5,
+      "first_seen": "2019-04-27 15:57:53.368 +00:00",
+      "last_seen": "2020-02-10 10:08:24.535 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "IEWIN7",
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx",
+        "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+      ]
+    },
+    {
+      "rule_title": "RDP over Reverse SSH Tunnel WFP",
+      "level": "high",
+      "count": 4,
+      "first_seen": "2019-02-13 18:04:01.632 +00:00",
+      "last_seen": "2019-02-13 18:04:45.905 +00:00",
+      "mitre_tactics": [
+        "C2",
+        "LatMov"
+      ],
+      "computers": [
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+      ]
+    },
+    {
+      "rule_title": "RDP Login from Localhost",
+      "level": "high",
+      "count": 2,
+      "first_seen": "2019-02-13 15:26:53.356 +00:00",
+      "last_seen": "2019-02-13 18:04:58.363 +00:00",
+      "mitre_tactics": [
+        "LatMov"
+      ],
+      "computers": [
+        "PC01.example.corp",
+        "PC02.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx",
+        "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+      ]
+    },
+    {
+      "rule_title": "Log Cleared",
+      "level": "high",
+      "count": 2,
+      "first_seen": "2019-02-13 18:01:41.593 +00:00",
+      "last_seen": "2019-11-15 08:19:02.298 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "PC01.example.corp",
+        "alice.insecurebank.local"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx",
+        "Privilege_Escalation__4624_LT3_AnonymousLogon_Localhost_-_JuicyPotato.evtx"
+      ]
+    },
+    {
+      "rule_title": "Outbound RDP Connections Over Non-Standard Tools",
+      "level": "high",
+      "count": 2,
+      "first_seen": "2019-02-13 18:04:01.632 +00:00",
+      "last_seen": "2019-02-13 18:04:45.905 +00:00",
+      "mitre_tactics": [
+        "LatMov"
+      ],
+      "computers": [
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+      ]
+    },
+    {
+      "rule_title": "User Added To Local Admin Grp",
+      "level": "high",
+      "count": 2,
+      "first_seen": "2019-09-22 11:22:05.201 +00:00",
+      "last_seen": "2019-09-22 11:23:19.251 +00:00",
+      "mitre_tactics": [
+        "Persis"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Persistence__Network_Service_Guest_added_to_admins_4732.evtx"
+      ]
+    },
+    {
+      "rule_title": "New RUN Key Pointing to Suspicious Folder",
+      "level": "high",
+      "count": 1,
+      "first_seen": "2019-04-27 15:57:53.884 +00:00",
+      "last_seen": "2019-04-27 15:57:53.884 +00:00",
+      "mitre_tactics": [
+        "PrivEsc",
+        "Persis"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+      ]
+    },
+    {
+      "rule_title": "Potentially Suspicious Execution From Parent Process In Public Folder",
+      "level": "high",
+      "count": 1,
+      "first_seen": "2020-10-23 21:57:36.014 +00:00",
+      "last_seen": "2020-10-23 21:57:36.014 +00:00",
+      "mitre_tactics": [
+        "Exec",
+        "Stealth"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "Password Change on Directory Service Restore Mode (DSRM) Account",
+      "level": "high",
+      "count": 1,
+      "first_seen": "2017-06-09 19:21:26.968 +00:00",
+      "last_seen": "2017-06-09 19:21:26.968 +00:00",
+      "mitre_tactics": [
+        "PrivEsc",
+        "Persis"
+      ],
+      "computers": [
+        "2016dc.hqcorp.local"
+      ],
+      "evtx_files": [
+        "Credential_Access__4794_DSRM_password_change_t1098.evtx"
+      ]
+    },
+    {
+      "rule_title": "Important Log File Cleared",
+      "level": "high",
+      "count": 1,
+      "first_seen": "2019-03-19 23:34:25.894 +00:00",
+      "last_seen": "2019-03-19 23:34:25.894 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "Defense_Evasion__DE_104_system_log_cleared.evtx"
+      ]
+    },
+    {
+      "rule_title": "LSASS Memory Access by Tool With Dump Keyword In Name",
+      "level": "high",
+      "count": 1,
+      "first_seen": "2020-02-10 10:08:24.666 +00:00",
+      "last_seen": "2020-02-10 10:08:24.666 +00:00",
+      "mitre_tactics": [
+        "CredAccess"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+      ]
+    },
+    {
+      "rule_title": "Proc Exec (Non-Exe Filetype)",
+      "level": "high",
+      "count": 1,
+      "first_seen": "2019-04-30 22:49:09.760 +00:00",
+      "last_seen": "2019-04-30 22:49:09.760 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+      ]
+    },
+    {
+      "rule_title": "RottenPotato Like Attack Pattern",
+      "level": "high",
+      "count": 1,
+      "first_seen": "2019-11-15 08:19:16.102 +00:00",
+      "last_seen": "2019-11-15 08:19:16.102 +00:00",
+      "mitre_tactics": [
+        "Collect",
+        "PrivEsc",
+        "CredAccess"
+      ],
+      "computers": [
+        "alice.insecurebank.local"
+      ],
+      "evtx_files": [
+        "Privilege_Escalation__4624_LT3_AnonymousLogon_Localhost_-_JuicyPotato.evtx"
+      ]
+    },
+    {
+      "rule_title": "Use NTFS Short Name in Command Line",
+      "level": "medium",
+      "count": 4,
+      "first_seen": "2020-10-23 21:58:17.176 +00:00",
+      "last_seen": "2020-10-23 21:58:22.066 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "Uncommon Svchost Parent Process",
+      "level": "medium",
+      "count": 2,
+      "first_seen": "2021-04-20 20:33:13.741 +00:00",
+      "last_seen": "2021-04-20 20:33:14.273 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "Reg Key Value Set (Sysmon Alert)",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2019-04-27 15:57:53.884 +00:00",
+      "last_seen": "2019-04-27 15:57:53.884 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+      ]
+    },
+    {
+      "rule_title": "Suspicious File Characteristics Due to Missing Fields",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2019-04-27 15:57:53.368 +00:00",
+      "last_seen": "2019-04-27 15:57:53.368 +00:00",
+      "mitre_tactics": [
+        "Exec"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+      ]
+    },
+    {
+      "rule_title": "CurrentVersion Autorun Keys Modification",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2019-04-27 15:57:53.884 +00:00",
+      "last_seen": "2019-04-27 15:57:53.884 +00:00",
+      "mitre_tactics": [
+        "PrivEsc",
+        "Persis"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+      ]
+    },
+    {
+      "rule_title": "Potentially Suspicious Rundll32 Activity",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2020-10-23 21:58:17.176 +00:00",
+      "last_seen": "2020-10-23 21:58:17.176 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "Schedule Task Creation From Env Variable Or Potentially Suspicious Path Via Schtasks.EXE",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2020-10-23 21:57:36.631 +00:00",
+      "last_seen": "2020-10-23 21:57:36.631 +00:00",
+      "mitre_tactics": [
+        "PrivEsc",
+        "Persis",
+        "Exec"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "Suspicious Scheduled Task Creation via Masqueraded XML File",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2020-10-23 21:57:36.631 +00:00",
+      "last_seen": "2020-10-23 21:57:36.631 +00:00",
+      "mitre_tactics": [
+        "PrivEsc",
+        "Exec",
+        "Persis",
+        "Stealth"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "DLL Call by Ordinal Via Rundll32.EXE",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2020-10-23 21:58:17.543 +00:00",
+      "last_seen": "2020-10-23 21:58:17.543 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "Tunneling Tool Execution",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2019-02-13 18:03:28.318 +00:00",
+      "last_seen": "2019-02-13 18:03:28.318 +00:00",
+      "mitre_tactics": [
+        "Exfil",
+        "C2"
+      ],
+      "computers": [
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+      ]
+    },
+    {
+      "rule_title": "Potential Credential Dumping Activity Via LSASS",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2020-02-10 10:08:24.666 +00:00",
+      "last_seen": "2020-02-10 10:08:24.666 +00:00",
+      "mitre_tactics": [
+        "CredAccess"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+      ]
+    },
+    {
+      "rule_title": "LSASS Access From Program In Potentially Suspicious Folder",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2020-02-10 10:08:24.666 +00:00",
+      "last_seen": "2020-02-10 10:08:24.666 +00:00",
+      "mitre_tactics": [
+        "CredAccess"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+      ]
+    },
+    {
+      "rule_title": "Always Install Elevated MSI Spawned Cmd And Powershell",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2019-04-30 22:49:10.198 +00:00",
+      "last_seen": "2019-04-30 22:49:10.198 +00:00",
+      "mitre_tactics": [
+        "PrivEsc"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+      ]
+    },
+    {
+      "rule_title": "Net Conn (Sysmon Alert)",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2021-04-20 20:33:01.944 +00:00",
+      "last_seen": "2021-04-20 20:33:01.944 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "Pass the Hash Activity 2",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2021-04-20 20:33:00.296 +00:00",
+      "last_seen": "2021-04-20 20:33:00.296 +00:00",
+      "mitre_tactics": [
+        "LatMov"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "Powershell Token Obfuscation - Powershell",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2020-08-26 05:09:28.845 +00:00",
+      "last_seen": "2020-08-26 05:09:28.845 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "DESKTOP-RIPCLIP"
+      ],
+      "evtx_files": [
+        "Other__exec_emotet_ps_4104.evtx"
+      ]
+    },
+    {
+      "rule_title": "Password Policy Enumerated",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2017-06-12 23:39:43.512 +00:00",
+      "last_seen": "2017-06-12 23:39:43.512 +00:00",
+      "mitre_tactics": [
+        "Disc"
+      ],
+      "computers": [
+        "2012r2srv.maincorp.local"
+      ],
+      "evtx_files": [
+        "Privilege_Escalation__4765_sidhistory_add_t1178.evtx"
+      ]
+    },
+    {
+      "rule_title": "Addition of SID History to Active Directory Object",
+      "level": "medium",
+      "count": 1,
+      "first_seen": "2017-06-12 23:39:43.512 +00:00",
+      "last_seen": "2017-06-12 23:39:43.512 +00:00",
+      "mitre_tactics": [
+        "Persis",
+        "PrivEsc",
+        "Stealth"
+      ],
+      "computers": [
+        "2012r2srv.maincorp.local"
+      ],
+      "evtx_files": [
+        "Privilege_Escalation__4765_sidhistory_add_t1178.evtx"
+      ]
+    },
+    {
+      "rule_title": "DLL Loaded (Sysmon Alert)",
+      "level": "low",
+      "count": 12,
+      "first_seen": "2019-04-27 15:57:53.587 +00:00",
+      "last_seen": "2020-02-10 10:08:25.193 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "IEWIN7",
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx",
+        "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+      ]
+    },
+    {
+      "rule_title": "Proc Access",
+      "level": "low",
+      "count": 5,
+      "first_seen": "2019-04-27 15:57:53.931 +00:00",
+      "last_seen": "2020-10-23 21:58:21.696 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "IEWIN7",
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx",
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx",
+        "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+      ]
+    },
+    {
+      "rule_title": "Possible Timestomping",
+      "level": "low",
+      "count": 5,
+      "first_seen": "2019-04-27 15:57:53.650 +00:00",
+      "last_seen": "2019-04-30 22:49:08.760 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx",
+        "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+      ]
+    },
+    {
+      "rule_title": "Potential Executable Run Itself As Sacrificial Process",
+      "level": "low",
+      "count": 2,
+      "first_seen": "2020-10-23 21:58:21.695 +00:00",
+      "last_seen": "2020-10-23 21:58:22.066 +00:00",
+      "mitre_tactics": [
+        "PrivEsc",
+        "Stealth"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "Windows Processes Suspicious Parent Directory",
+      "level": "low",
+      "count": 2,
+      "first_seen": "2021-04-20 20:33:13.741 +00:00",
+      "last_seen": "2021-04-20 20:33:14.273 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "File Deletion Via Del",
+      "level": "low",
+      "count": 1,
+      "first_seen": "2019-04-27 15:57:54.134 +00:00",
+      "last_seen": "2019-04-27 15:57:54.134 +00:00",
+      "mitre_tactics": [
+        "Stealth"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+      ]
+    },
+    {
+      "rule_title": "Scheduled Task Created - FileCreation",
+      "level": "low",
+      "count": 1,
+      "first_seen": "2019-04-27 15:57:27.087 +00:00",
+      "last_seen": "2019-04-27 15:57:27.087 +00:00",
+      "mitre_tactics": [
+        "Exec",
+        "Persis",
+        "PrivEsc"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+      ]
+    },
+    {
+      "rule_title": "Creation of an Executable by an Executable",
+      "level": "low",
+      "count": 1,
+      "first_seen": "2019-04-27 15:57:53.650 +00:00",
+      "last_seen": "2019-04-27 15:57:53.650 +00:00",
+      "mitre_tactics": [
+        "ResDev"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+      ]
+    },
+    {
+      "rule_title": "Scheduled Task Creation Via Schtasks.EXE",
+      "level": "low",
+      "count": 1,
+      "first_seen": "2020-10-23 21:57:36.631 +00:00",
+      "last_seen": "2020-10-23 21:57:36.631 +00:00",
+      "mitre_tactics": [
+        "Exec",
+        "Persis",
+        "PrivEsc"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logon Failure (Wrong Password)",
+      "level": "low",
+      "count": 1,
+      "first_seen": "2020-09-09 13:18:23.627 +00:00",
+      "last_seen": "2020-09-09 13:18:23.627 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Credential_Access__CA_4624_4625_LogonType2_LogonProc_chrome.evtx"
+      ]
+    },
+    {
+      "rule_title": "Local Accounts Discovery",
+      "level": "low",
+      "count": 1,
+      "first_seen": "2019-04-30 22:52:27.588 +00:00",
+      "last_seen": "2019-04-30 22:52:27.588 +00:00",
+      "mitre_tactics": [
+        "Disc"
+      ],
+      "computers": [
+        "IEWIN7"
+      ],
+      "evtx_files": [
+        "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+      ]
+    },
+    {
+      "rule_title": "Non Interactive PowerShell Process Spawned",
+      "level": "low",
+      "count": 1,
+      "first_seen": "2021-04-20 20:32:55.368 +00:00",
+      "last_seen": "2021-04-20 20:32:55.368 +00:00",
+      "mitre_tactics": [
+        "Exec"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "Network Connection Initiated By PowerShell Process",
+      "level": "low",
+      "count": 1,
+      "first_seen": "2021-04-20 20:33:01.944 +00:00",
+      "last_seen": "2021-04-20 20:33:01.944 +00:00",
+      "mitre_tactics": [
+        "Exec"
+      ],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "Net Conn",
+      "level": "informational",
+      "count": 69,
+      "first_seen": "2019-02-13 18:01:47.512 +00:00",
+      "last_seen": "2021-04-20 20:33:20.254 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "MSEDGEWIN10",
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx",
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "Proc Exec",
+      "level": "informational",
+      "count": 33,
+      "first_seen": "2019-02-13 18:01:47.562 +00:00",
+      "last_seen": "2021-04-20 20:33:14.273 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "IEWIN7",
+        "MSEDGEWIN10",
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx",
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx",
+        "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx",
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "Pipe Conn",
+      "level": "informational",
+      "count": 21,
+      "first_seen": "2020-09-27 13:19:54.244 +00:00",
+      "last_seen": "2021-04-20 20:33:00.306 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx",
+        "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+      ]
+    },
+    {
+      "rule_title": "File Created",
+      "level": "informational",
+      "count": 9,
+      "first_seen": "2019-04-27 15:57:25.868 +00:00",
+      "last_seen": "2020-10-23 21:58:22.391 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "IEWIN7",
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx",
+        "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+      ]
+    },
+    {
+      "rule_title": "Admin Logon",
+      "level": "informational",
+      "count": 3,
+      "first_seen": "2019-02-13 18:04:43.171 +00:00",
+      "last_seen": "2019-02-13 18:04:58.363 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+      ]
+    },
+    {
+      "rule_title": "Proc Terminated",
+      "level": "informational",
+      "count": 2,
+      "first_seen": "2019-04-27 15:57:54.165 +00:00",
+      "last_seen": "2020-02-10 10:08:27.797 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "IEWIN7",
+        "MSEDGEWIN10"
+      ],
+      "evtx_files": [
+        "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx",
+        "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logon (RemoteInteractive (RDP)) *Creds in memory*",
+      "level": "informational",
+      "count": 2,
+      "first_seen": "2019-02-13 15:26:53.356 +00:00",
+      "last_seen": "2019-02-13 18:04:58.363 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "PC01.example.corp",
+        "PC02.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx",
+        "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logon (Interactive) *Creds in memory*",
+      "level": "informational",
+      "count": 2,
+      "first_seen": "2019-02-13 15:19:51.259 +00:00",
+      "last_seen": "2019-02-13 15:29:40.657 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "PC02.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logon (Network)",
+      "level": "informational",
+      "count": 2,
+      "first_seen": "2019-02-13 15:31:19.529 +00:00",
+      "last_seen": "2019-02-13 15:31:31.556 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "PC02.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logon (System) - Bootup",
+      "level": "informational",
+      "count": 1,
+      "first_seen": "2019-02-13 15:15:04.175 +00:00",
+      "last_seen": "2019-02-13 15:15:04.175 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "PC02.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logon (Service)",
+      "level": "informational",
+      "count": 1,
+      "first_seen": "2019-02-13 15:15:08.689 +00:00",
+      "last_seen": "2019-02-13 15:15:08.689 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "PC02.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logon (CachedInteractive) *Creds in memory*",
+      "level": "informational",
+      "count": 1,
+      "first_seen": "2019-02-13 18:02:04.426 +00:00",
+      "last_seen": "2019-02-13 18:02:04.426 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logon (Unlock)",
+      "level": "informational",
+      "count": 1,
+      "first_seen": "2019-02-13 18:02:04.526 +00:00",
+      "last_seen": "2019-02-13 18:02:04.526 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "PC01.example.corp"
+      ],
+      "evtx_files": [
+        "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+      ]
+    },
+    {
+      "rule_title": "PwSh Scriptblock",
+      "level": "informational",
+      "count": 1,
+      "first_seen": "2020-08-26 05:09:28.845 +00:00",
+      "last_seen": "2020-08-26 05:09:28.845 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "DESKTOP-RIPCLIP"
+      ],
+      "evtx_files": [
+        "Other__exec_emotet_ps_4104.evtx"
+      ]
+    },
+    {
+      "rule_title": "Logoff",
+      "level": "informational",
+      "count": 1,
+      "first_seen": "2019-11-15 08:19:17.134 +00:00",
+      "last_seen": "2019-11-15 08:19:17.134 +00:00",
+      "mitre_tactics": [],
+      "computers": [
+        "alice.insecurebank.local"
+      ],
+      "evtx_files": [
+        "Privilege_Escalation__4624_LT3_AnonymousLogon_Localhost_-_JuicyPotato.evtx"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "Timestamp": "2017-06-09 19:21:26.968 +00:00",
+      "RuleTitle": "Password Change on Directory Service Restore Mode (DSRM) Account",
+      "Level": "high",
+      "Computer": "2016dc.hqcorp.local",
+      "Channel": "Sec",
+      "EventID": 4794,
+      "RecordID": 3139859,
+      "EvtxFile": "Credential_Access__4794_DSRM_password_change_t1098.evtx"
+    },
+    {
+      "Timestamp": "2017-06-12 23:39:43.512 +00:00",
+      "RuleTitle": "Password Policy Enumerated",
+      "Level": "med",
+      "Computer": "2012r2srv.maincorp.local",
+      "Channel": "Sec",
+      "EventID": 4661,
+      "RecordID": 8068,
+      "EvtxFile": "Privilege_Escalation__4765_sidhistory_add_t1178.evtx"
+    },
+    {
+      "Timestamp": "2017-06-12 23:39:43.512 +00:00",
+      "RuleTitle": "Addition of SID History to Active Directory Object",
+      "Level": "med",
+      "Computer": "2012r2srv.maincorp.local",
+      "Channel": "Sec",
+      "EventID": 4765,
+      "RecordID": 8075,
+      "EvtxFile": "Privilege_Escalation__4765_sidhistory_add_t1178.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 15:15:04.175 +00:00",
+      "RuleTitle": "Logon (System) - Bootup",
+      "Level": "info",
+      "Computer": "PC02.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 5281,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 15:15:08.689 +00:00",
+      "RuleTitle": "Logon (Service)",
+      "Level": "info",
+      "Computer": "PC02.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 5299,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 15:19:51.259 +00:00",
+      "RuleTitle": "Logon (Interactive) *Creds in memory*",
+      "Level": "info",
+      "Computer": "PC02.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 5308,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 15:26:53.356 +00:00",
+      "RuleTitle": "Logon (RemoteInteractive (RDP)) *Creds in memory*",
+      "Level": "info",
+      "Computer": "PC02.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 5315,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 15:26:53.356 +00:00",
+      "RuleTitle": "RDP Login from Localhost",
+      "Level": "high",
+      "Computer": "PC02.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 5315,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 15:29:40.657 +00:00",
+      "RuleTitle": "Logon (Interactive) *Creds in memory*",
+      "Level": "info",
+      "Computer": "PC02.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 5319,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 15:31:19.529 +00:00",
+      "RuleTitle": "Logon (Network)",
+      "Level": "info",
+      "Computer": "PC02.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 5322,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 15:31:31.556 +00:00",
+      "RuleTitle": "Logon (Network)",
+      "Level": "info",
+      "Computer": "PC02.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 5323,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunneling_4624.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:01:41.593 +00:00",
+      "RuleTitle": "Log Cleared",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 1102,
+      "RecordID": 227693,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:01:47.512 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227694,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:01:47.562 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227695,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:04.426 +00:00",
+      "RuleTitle": "Logon (CachedInteractive) *Creds in memory*",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 227701,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:04.426 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227698,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:04.466 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227703,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:04.476 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227704,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:04.476 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227705,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:04.526 +00:00",
+      "RuleTitle": "Logon (Unlock)",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 227708,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:05.418 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227709,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:05.458 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227710,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:05.528 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227712,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:02:19.518 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227713,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:28.318 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227714,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:28.318 +00:00",
+      "RuleTitle": "Tunneling Tool Execution",
+      "Level": "med",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227714,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:28.348 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227717,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:29.121 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227718,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:29.121 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227719,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:32.183 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227720,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:35.704 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227721,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:36.025 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227724,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:36.025 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227725,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:03:42.664 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227726,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:01.632 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227727,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:01.632 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227728,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:01.632 +00:00",
+      "RuleTitle": "Outbound RDP Connections Over Non-Standard Tools",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227727,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:01.632 +00:00",
+      "RuleTitle": "RDP over Reverse SSH Tunnel WFP",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227727,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:01.632 +00:00",
+      "RuleTitle": "RDP over Reverse SSH Tunnel WFP",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227728,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:01.722 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227732,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:01.722 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227734,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:01.722 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227736,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:43.171 +00:00",
+      "RuleTitle": "Admin Logon",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4672,
+      "RecordID": 227739,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:43.171 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227737,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:43.171 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227738,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:45.905 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227741,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:45.905 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227742,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:45.905 +00:00",
+      "RuleTitle": "Outbound RDP Connections Over Non-Standard Tools",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227741,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:45.905 +00:00",
+      "RuleTitle": "RDP over Reverse SSH Tunnel WFP",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227741,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:45.905 +00:00",
+      "RuleTitle": "RDP over Reverse SSH Tunnel WFP",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227742,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:57.442 +00:00",
+      "RuleTitle": "Admin Logon",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4672,
+      "RecordID": 227746,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:57.442 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227745,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:57.462 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227748,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:57.462 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227749,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:57.542 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227750,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:57.672 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227751,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.283 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227756,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.323 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227757,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.333 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227758,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.333 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227759,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.363 +00:00",
+      "RuleTitle": "Logon (RemoteInteractive (RDP)) *Creds in memory*",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 227762,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.363 +00:00",
+      "RuleTitle": "Admin Logon",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4672,
+      "RecordID": 227763,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.363 +00:00",
+      "RuleTitle": "RDP Login from Localhost",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 227762,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.413 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227765,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.413 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227766,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.413 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227767,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:04:58.543 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227768,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:00.997 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227769,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:04.802 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227772,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:04.802 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227773,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:04.873 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227774,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:05.123 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227775,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:05.253 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227776,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:06.575 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227783,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:06.585 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 4688,
+      "RecordID": 227784,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.592 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227826,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.592 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227827,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.592 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227828,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.592 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227829,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.592 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227830,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.592 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227831,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.602 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227832,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.602 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227833,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.712 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227868,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.712 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227869,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.712 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227870,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.712 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227871,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.712 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227872,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.712 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227873,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.712 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227874,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.712 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227875,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.773 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227946,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.773 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227947,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.793 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227948,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:18.793 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227949,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:19.684 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227950,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:19.734 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227951,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:19.734 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227952,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:21.597 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227953,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:21.597 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227954,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:21.607 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227955,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:21.607 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227956,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:24.601 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227957,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:24.601 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227958,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:24.611 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227959,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-02-13 18:05:24.611 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sec",
+      "EventID": 5156,
+      "RecordID": 227960,
+      "EvtxFile": "Command_and_Control__DE_RDP_Tunnel_5156.evtx"
+    },
+    {
+      "Timestamp": "2019-03-19 23:34:25.894 +00:00",
+      "RuleTitle": "Important Log File Cleared",
+      "Level": "high",
+      "Computer": "PC01.example.corp",
+      "Channel": "Sys",
+      "EventID": 104,
+      "RecordID": 27736,
+      "EvtxFile": "Defense_Evasion__DE_104_system_log_cleared.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:25.868 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 6575,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:27.087 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 6576,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:27.087 +00:00",
+      "RuleTitle": "Scheduled Task Created - FileCreation",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 6576,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.368 +00:00",
+      "RuleTitle": "Proc Exec (Sysmon Alert)",
+      "Level": "high",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 6577,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.368 +00:00",
+      "RuleTitle": "Suspicious File Characteristics Due to Missing Fields",
+      "Level": "med",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 6577,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.587 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6578,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.650 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 6579,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.650 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 6581,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.650 +00:00",
+      "RuleTitle": "Possible Timestomping",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 2,
+      "RecordID": 6580,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.650 +00:00",
+      "RuleTitle": "Possible Timestomping",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 2,
+      "RecordID": 6582,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.650 +00:00",
+      "RuleTitle": "Possible Timestomping",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 2,
+      "RecordID": 6583,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.650 +00:00",
+      "RuleTitle": "Creation of an Executable by an Executable",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 6579,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.837 +00:00",
+      "RuleTitle": "Proc Exec (Sysmon Alert)",
+      "Level": "high",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 6584,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.837 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6585,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.837 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6586,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.837 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6587,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.853 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6588,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.853 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6589,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.868 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6590,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.868 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6591,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.868 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 6592,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.884 +00:00",
+      "RuleTitle": "Reg Key Value Set (Sysmon Alert)",
+      "Level": "med",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 13,
+      "RecordID": 6593,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.884 +00:00",
+      "RuleTitle": "CurrentVersion Autorun Keys Modification",
+      "Level": "med",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 13,
+      "RecordID": 6593,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.884 +00:00",
+      "RuleTitle": "New RUN Key Pointing to Suspicious Folder",
+      "Level": "high",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 13,
+      "RecordID": 6593,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.931 +00:00",
+      "RuleTitle": "Proc Access",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 10,
+      "RecordID": 6595,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:53.931 +00:00",
+      "RuleTitle": "Proc Exec (Sysmon Alert)",
+      "Level": "high",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 6594,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:54.134 +00:00",
+      "RuleTitle": "Proc Exec (Sysmon Alert)",
+      "Level": "high",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 6622,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:54.134 +00:00",
+      "RuleTitle": "File Deletion Via Del",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 6622,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-27 15:57:54.165 +00:00",
+      "RuleTitle": "Proc Terminated",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 5,
+      "RecordID": 6623,
+      "EvtxFile": "AutomatedTestingTools__DE_timestomp_and_dll_sideloading_and_RunPersist.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:48:58.901 +00:00",
+      "RuleTitle": "Possible Timestomping",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 2,
+      "RecordID": 10147,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:48:59.260 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 10148,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:49:08.760 +00:00",
+      "RuleTitle": "Possible Timestomping",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 2,
+      "RecordID": 10149,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:49:09.760 +00:00",
+      "RuleTitle": "Proc Exec (Non-Exe Filetype)",
+      "Level": "high",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 10151,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:49:09.760 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 10151,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:49:10.198 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 10153,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:49:10.198 +00:00",
+      "RuleTitle": "Always Install Elevated MSI Spawned Cmd And Powershell",
+      "Level": "med",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 10153,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:52:27.588 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 10154,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-04-30 22:52:27.588 +00:00",
+      "RuleTitle": "Local Accounts Discovery",
+      "Level": "low",
+      "Computer": "IEWIN7",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 10154,
+      "EvtxFile": "Execution__Exec_sysmon_meterpreter_reversetcp_msipackage.evtx"
+    },
+    {
+      "Timestamp": "2019-09-22 11:22:05.201 +00:00",
+      "RuleTitle": "User Added To Local Admin Grp",
+      "Level": "high",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sec",
+      "EventID": 4732,
+      "RecordID": 191029,
+      "EvtxFile": "Persistence__Network_Service_Guest_added_to_admins_4732.evtx"
+    },
+    {
+      "Timestamp": "2019-09-22 11:23:19.251 +00:00",
+      "RuleTitle": "User Added To Local Admin Grp",
+      "Level": "high",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sec",
+      "EventID": 4732,
+      "RecordID": 191030,
+      "EvtxFile": "Persistence__Network_Service_Guest_added_to_admins_4732.evtx"
+    },
+    {
+      "Timestamp": "2019-11-15 08:19:02.298 +00:00",
+      "RuleTitle": "Log Cleared",
+      "Level": "high",
+      "Computer": "alice.insecurebank.local",
+      "Channel": "Sec",
+      "EventID": 1102,
+      "RecordID": 25048,
+      "EvtxFile": "Privilege_Escalation__4624_LT3_AnonymousLogon_Localhost_-_JuicyPotato.evtx"
+    },
+    {
+      "Timestamp": "2019-11-15 08:19:16.102 +00:00",
+      "RuleTitle": "RottenPotato Like Attack Pattern",
+      "Level": "high",
+      "Computer": "alice.insecurebank.local",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 25049,
+      "EvtxFile": "Privilege_Escalation__4624_LT3_AnonymousLogon_Localhost_-_JuicyPotato.evtx"
+    },
+    {
+      "Timestamp": "2019-11-15 08:19:17.134 +00:00",
+      "RuleTitle": "Logoff",
+      "Level": "info",
+      "Computer": "alice.insecurebank.local",
+      "Channel": "Sec",
+      "EventID": 4634,
+      "RecordID": 25050,
+      "EvtxFile": "Privilege_Escalation__4624_LT3_AnonymousLogon_Localhost_-_JuicyPotato.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:24.535 +00:00",
+      "RuleTitle": "Proc Exec (Sysmon Alert)",
+      "Level": "high",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 20012,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:24.666 +00:00",
+      "RuleTitle": "Proc Access",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 10,
+      "RecordID": 20013,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:24.666 +00:00",
+      "RuleTitle": "LSASS Memory Access by Tool With Dump Keyword In Name",
+      "Level": "high",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 10,
+      "RecordID": 20013,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:24.666 +00:00",
+      "RuleTitle": "Potential Credential Dumping Activity Via LSASS",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 10,
+      "RecordID": 20013,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:24.666 +00:00",
+      "RuleTitle": "LSASS Access From Program In Potentially Suspicious Folder",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 10,
+      "RecordID": 20013,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:25.164 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 20014,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:25.193 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 20015,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:25.193 +00:00",
+      "RuleTitle": "DLL Loaded (Sysmon Alert)",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 7,
+      "RecordID": 20016,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-02-10 10:08:27.797 +00:00",
+      "RuleTitle": "Proc Terminated",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 5,
+      "RecordID": 20017,
+      "EvtxFile": "Defense_Evasion__DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx"
+    },
+    {
+      "Timestamp": "2020-08-26 05:09:28.845 +00:00",
+      "RuleTitle": "PwSh Scriptblock",
+      "Level": "info",
+      "Computer": "DESKTOP-RIPCLIP",
+      "Channel": "PwSh",
+      "EventID": 4104,
+      "RecordID": 683,
+      "EvtxFile": "Other__exec_emotet_ps_4104.evtx"
+    },
+    {
+      "Timestamp": "2020-08-26 05:09:28.845 +00:00",
+      "RuleTitle": "Powershell Token Obfuscation - Powershell",
+      "Level": "med",
+      "Computer": "DESKTOP-RIPCLIP",
+      "Channel": "PwSh",
+      "EventID": 4104,
+      "RecordID": 683,
+      "EvtxFile": "Other__exec_emotet_ps_4104.evtx"
+    },
+    {
+      "Timestamp": "2020-09-09 13:18:23.627 +00:00",
+      "RuleTitle": "Logon Failure (Wrong Password)",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sec",
+      "EventID": 4625,
+      "RecordID": 137222,
+      "EvtxFile": "Credential_Access__CA_4624_4625_LogonType2_LogonProc_chrome.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.244 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409597,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.250 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409598,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.257 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409599,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.264 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409600,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.272 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409601,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.286 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409602,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.293 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409603,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.299 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409604,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.314 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409605,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.322 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409606,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.328 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409607,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.343 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409608,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.350 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409609,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.364 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409610,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.371 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409611,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.377 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409612,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.385 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409613,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:19:54.399 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409614,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:20:11.245 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409615,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-09-27 13:20:11.247 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 409616,
+      "EvtxFile": "Discovery__Discovery_Remote_System_NamedPipes_Sysmon_18.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:29.217 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 423991,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:34.745 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 423992,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:34.767 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 423993,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:36.014 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 423994,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:36.014 +00:00",
+      "RuleTitle": "Potentially Suspicious Execution From Parent Process In Public Folder",
+      "Level": "high",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 423994,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:36.332 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 424049,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:36.399 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424076,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:36.631 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424079,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:36.631 +00:00",
+      "RuleTitle": "Scheduled Task Creation Via Schtasks.EXE",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424079,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:36.631 +00:00",
+      "RuleTitle": "Schedule Task Creation From Env Variable Or Potentially Suspicious Path Via Schtasks.EXE",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424079,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:57:36.631 +00:00",
+      "RuleTitle": "Suspicious Scheduled Task Creation via Masqueraded XML File",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424079,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:07.601 +00:00",
+      "RuleTitle": "Proc Access",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 10,
+      "RecordID": 424080,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:17.176 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424081,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:17.176 +00:00",
+      "RuleTitle": "Potentially Suspicious Rundll32 Activity",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424081,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:17.176 +00:00",
+      "RuleTitle": "Use NTFS Short Name in Command Line",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424081,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:17.543 +00:00",
+      "RuleTitle": "Proc Access",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 10,
+      "RecordID": 424116,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:17.543 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424115,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:17.543 +00:00",
+      "RuleTitle": "Use NTFS Short Name in Command Line",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424115,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:17.543 +00:00",
+      "RuleTitle": "DLL Call by Ordinal Via Rundll32.EXE",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424115,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:21.695 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424175,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:21.695 +00:00",
+      "RuleTitle": "Use NTFS Short Name in Command Line",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424175,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:21.695 +00:00",
+      "RuleTitle": "Potential Executable Run Itself As Sacrificial Process",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424175,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:21.696 +00:00",
+      "RuleTitle": "Proc Access",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 10,
+      "RecordID": 424176,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:22.066 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424261,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:22.066 +00:00",
+      "RuleTitle": "Use NTFS Short Name in Command Line",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424261,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:22.066 +00:00",
+      "RuleTitle": "Potential Executable Run Itself As Sacrificial Process",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 424261,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:22.364 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 424322,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2020-10-23 21:58:22.391 +00:00",
+      "RuleTitle": "File Created",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 11,
+      "RecordID": 424323,
+      "EvtxFile": "AutomatedTestingTools__rundll32_cmd_schtask.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:32:55.368 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578497,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:32:55.368 +00:00",
+      "RuleTitle": "Non Interactive PowerShell Process Spawned",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578497,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:00.296 +00:00",
+      "RuleTitle": "Pass the Hash Activity 2",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sec",
+      "EventID": 4624,
+      "RecordID": 321446,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:00.306 +00:00",
+      "RuleTitle": "Pipe Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 18,
+      "RecordID": 578498,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:00.384 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578499,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:01.944 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 3,
+      "RecordID": 578501,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:01.944 +00:00",
+      "RuleTitle": "Net Conn (Sysmon Alert)",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 3,
+      "RecordID": 578500,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:01.944 +00:00",
+      "RuleTitle": "Network Connection Initiated By PowerShell Process",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 3,
+      "RecordID": 578500,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:13.741 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578503,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:13.741 +00:00",
+      "RuleTitle": "Windows Processes Suspicious Parent Directory",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578503,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:13.741 +00:00",
+      "RuleTitle": "Uncommon Svchost Parent Process",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578503,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:14.273 +00:00",
+      "RuleTitle": "Proc Exec",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578505,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:14.273 +00:00",
+      "RuleTitle": "Windows Processes Suspicious Parent Directory",
+      "Level": "low",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578505,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:14.273 +00:00",
+      "RuleTitle": "Uncommon Svchost Parent Process",
+      "Level": "med",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 1,
+      "RecordID": 578505,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:14.860 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 3,
+      "RecordID": 578506,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:14.861 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 3,
+      "RecordID": 578507,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:18.296 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 3,
+      "RecordID": 578508,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:18.296 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 3,
+      "RecordID": 578509,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    },
+    {
+      "Timestamp": "2021-04-20 20:33:20.254 +00:00",
+      "RuleTitle": "Net Conn",
+      "Level": "info",
+      "Computer": "MSEDGEWIN10",
+      "Channel": "Sysmon",
+      "EventID": 3,
+      "RecordID": 578510,
+      "EvtxFile": "Lateral_Movement__ImpersonateUser-via_local_Pass_The_Hash_Sysmon_and_Security.evtx"
+    }
+  ],
+  "truncated": false,
+  "warnings": []
+}

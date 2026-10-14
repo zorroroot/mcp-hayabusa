@@ -48,6 +48,12 @@ Severity = Literal["informational", "low", "medium", "high", "critical", "emerge
 HAYABUSA_DIR = Path(__file__).parent / "hayabusa"
 MANIFEST = HAYABUSA_DIR / ".hayabusa-release.json"
 
+# scan_evtx paths come from the model, so they can come from a prompt or from
+# text inside the logs being analyzed. Only these roots may be scanned:
+# MCP_HAYABUSA_ALLOWED_ROOTS, os.pathsep-separated (`;` on Windows), or `*`
+# to allow any path. Unset, it is just ./samples -- secure by default.
+DEFAULT_ALLOWED_ROOT = Path(__file__).parent / "samples"
+
 # Windows Application Control (Smart App Control / WDAC) refusing to execute an
 # unsigned binary. Surfaces as OSError with this .winerror -- the trigger for
 # falling back to WSL.
@@ -64,6 +70,37 @@ SCAN_TIMEOUT_SECONDS = 900
 # Findings are returned inline to a model; a noisy scan can produce tens of
 # thousands. Cap the payload and report the cap rather than truncating silently.
 MAX_FINDINGS = 1000
+
+OutputFormat = Literal["summary", "full"]
+
+# Fields kept per finding in `summary` output. `Details` and `ExtraFieldInfo`
+# are most of the payload; a full scan of the samples is ~165 KB with them.
+SUMMARY_FIELDS = (
+    "Timestamp", "RuleTitle", "Level", "Computer", "Channel",
+    "EventID", "RecordID", "EvtxFile",
+)
+
+# Hayabusa abbreviates MITRE tactics in output (`LatMov`, `CredAccess`), just as
+# it abbreviates levels -- a substring match for "lateral" against the raw
+# value finds nothing. Expansions from config/mitre_tactics.txt (v4.1.0);
+# hardcoded because under the WSL backend that file is inside the distro.
+MITRE_TACTICS = {
+    "Recon": "reconnaissance",
+    "ResDev": "resource-development",
+    "InitAccess": "initial-access",
+    "Exec": "execution",
+    "Persis": "persistence",
+    "PrivEsc": "privilege-escalation",
+    "Stealth": "stealth defense-evasion",
+    "DefImpair": "defense-impairment",
+    "CredAccess": "credential-access",
+    "Disc": "discovery",
+    "LatMov": "lateral-movement",
+    "Collect": "collection",
+    "C2": "command-and-control",
+    "Exfil": "exfiltration",
+    "Impact": "impact",
+}
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 EVENT_COUNTS = re.compile(
@@ -187,6 +224,42 @@ def wsl_hayabusa() -> tuple[str, str]:
     return resolved
 
 
+def allowed_roots() -> list[Path] | None:
+    """The roots scan_evtx may read under, or None for unrestricted (`*`).
+
+    Read per call, like MCP_HAYABUSA_BACKEND, so tests can change it.
+    """
+    raw = os.environ.get("MCP_HAYABUSA_ALLOWED_ROOTS", "").strip()
+    if raw == "*":
+        return None
+    if not raw:
+        return [DEFAULT_ALLOWED_ROOT.resolve()]
+    return [Path(p.strip()).expanduser().resolve()
+            for p in raw.split(os.pathsep) if p.strip()]
+
+
+def check_allowed(target: Path) -> None:
+    """Raise ToolError unless `target` (already resolved) is under an allowed root.
+
+    `target` must come from Path.resolve(), which collapses `..` and follows
+    symlinks and junctions, so neither can step outside a root. Containment is
+    by path components, not string prefix: `samples-evil` is not under
+    `samples`. On Windows the comparison is case-insensitive, as the
+    filesystem is.
+    """
+    roots = allowed_roots()
+    if roots is None:
+        return
+    if any(target == root or root in target.parents for root in roots):
+        return
+    raise ToolError(
+        f"{target} is outside the allowed scan roots: "
+        f"{', '.join(str(r) for r in roots)}. To allow it, add its folder to "
+        f"MCP_HAYABUSA_ALLOWED_ROOTS (separated by {os.pathsep!r}) in the "
+        f"server's env config, or set it to * to allow any path."
+    )
+
+
 def _backend_order() -> list[str]:
     """Which backends to try, in order."""
     choice = os.environ.get("MCP_HAYABUSA_BACKEND", "auto").strip().lower() or "auto"
@@ -233,6 +306,9 @@ def _build_argv(
         "--output-type", "jsonl",
         "--output", output,
         "--min-level", min_severity,
+        # The only profile that emits RuleFile, MitreTactics/Tags and EvtxFile,
+        # which rule_filter matches on and which say where a finding came from.
+        "--profile", "verbose",
         # Absolute: the defaults are ./rules and ./rules/config, relative to cwd.
         "--rules", rules_dir,
         "--rules-config", f"{rules_dir}/config" if backend == "wsl"
@@ -261,6 +337,81 @@ def normalize_level(value: Any) -> str | None:
     return matches[0] if len(matches) == 1 and text else None
 
 
+def _as_list(value: Any) -> list[str]:
+    """A verbose-profile tag field: a list, a bare string, or absent when empty."""
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return [str(v) for v in value]
+    return [str(value)]
+
+
+def _fold(text: str) -> str:
+    """Lowercase and treat `-`, `_` and spaces alike, so "lateral movement",
+    "lateral-movement" and "lateral_movement" all match each other."""
+    return re.sub(r"[-_\s]+", " ", text.lower()).strip()
+
+
+def rule_matches(finding: dict[str, Any], term: str) -> bool:
+    """Does `term` appear in this finding's rule metadata?
+
+    Checks the rule title, rule file name, MITRE tactics (expanded from
+    Hayabusa's abbreviations), MITRE technique tags and other tags.
+    """
+    tactics = _as_list(finding.get("MitreTactics"))
+    haystack = [
+        str(finding.get("RuleTitle", "")),
+        str(finding.get("RuleFile", "")),
+        *tactics,
+        *(MITRE_TACTICS.get(t, "") for t in tactics),
+        *_as_list(finding.get("MitreTags")),
+        *_as_list(finding.get("OtherTags")),
+    ]
+    needle = _fold(term)
+    return any(needle in _fold(field) for field in haystack)
+
+
+def _basename(path: Any) -> str:
+    """File name from either separator style: WSL reports /mnt/c/... paths."""
+    return re.split(r"[\\/]", str(path))[-1]
+
+
+def _slim(finding: dict[str, Any]) -> dict[str, Any]:
+    """A `summary` row: SUMMARY_FIELDS only, with the EVTX path cut to its name."""
+    row = {k: finding[k] for k in SUMMARY_FIELDS if k in finding}
+    if "EvtxFile" in row:
+        row["EvtxFile"] = _basename(row["EvtxFile"])
+    return row
+
+
+def _summarize_rules(findings: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """One row per rule: level, hit count, first/last time, where it fired."""
+    rules: dict[tuple[str, str], dict[str, Any]] = {}
+    for f in findings:
+        level = normalize_level(f.get("Level", "")) or "unknown"
+        key = (str(f.get("RuleTitle", "")), level)
+        ts = str(f.get("Timestamp", ""))
+        row = rules.setdefault(key, {
+            "rule_title": key[0], "level": level, "count": 0,
+            "first_seen": ts, "last_seen": ts,
+            "mitre_tactics": _as_list(f.get("MitreTactics")),
+            "computers": set(), "evtx_files": set(),
+        })
+        row["count"] += 1
+        row["first_seen"] = min(row["first_seen"], ts)
+        row["last_seen"] = max(row["last_seen"], ts)
+        if f.get("Computer"):
+            row["computers"].add(str(f["Computer"]))
+        if f.get("EvtxFile"):
+            row["evtx_files"].add(_basename(f["EvtxFile"]))
+    out = sorted(rules.values(),
+                 key=lambda r: (-RANK.get(r["level"], len(RANK)), -r["count"]))
+    for row in out:
+        row["computers"] = sorted(row["computers"])
+        row["evtx_files"] = sorted(row["evtx_files"])
+    return out
+
+
 def _read_findings(path: Path) -> tuple[list[dict[str, Any]], int]:
     """Parse Hayabusa's JSONL output. Returns (findings, unparsable_line_count)."""
     if not path.exists():
@@ -281,7 +432,11 @@ def _read_findings(path: Path) -> tuple[list[dict[str, Any]], int]:
 @server.tool(name="scan_evtx")
 def scan_evtx(
     path: Annotated[str, Field(
-        description="Path to a single .evtx file, or a directory containing them.",
+        description=(
+            "Absolute path to a single .evtx file, or a directory containing "
+            "them. Must be under one of the server's allowed scan roots; the "
+            "error for a disallowed path lists them."
+        ),
     )],
     min_severity: Annotated[Severity, Field(
         description=(
@@ -289,13 +444,43 @@ def scan_evtx(
             "reports everything."
         ),
     )] = "informational",
+    rule_filter: Annotated[str | None, Field(
+        description=(
+            "Only report detections from rules whose title, rule file name, "
+            "MITRE ATT&CK tactic or tag contains this text (case-insensitive), "
+            "e.g. 'lateral', 'mimikatz', 'lsass', 'T1003'. All rules still run; "
+            "this filters which detections are returned."
+        ),
+    )] = None,
+    output_format: Annotated[OutputFormat, Field(
+        description=(
+            "'summary' (default): a per-rule rollup plus one slim row per "
+            "detection (time, rule, level, computer, event ID, record ID, "
+            "source file). 'full': every field Hayabusa reports, including "
+            "Details and ExtraFieldInfo."
+        ),
+    )] = "summary",
+    max_results: Annotated[int | None, Field(
+        ge=1, le=MAX_FINDINGS,
+        description=(
+            f"Maximum number of detections to return (1-{MAX_FINDINGS}; default "
+            f"{MAX_FINDINGS}). The most severe are kept. Counts always reflect "
+            f"every matching detection."
+        ),
+    )] = None,
 ) -> dict[str, Any]:
     """Scan a Windows EVTX file, or a directory of them, with Hayabusa and
-    return the detections as structured JSON. Optionally filter to detections
-    at or above a minimum severity level.
+    return the detections as structured JSON. Optionally filter by minimum
+    severity and by rule (title, MITRE tactic or tag), choose a compact
+    summary or full detail, and limit how many detections come back.
     """
+    limit = max_results or MAX_FINDINGS
+    term = (rule_filter or "").strip()
     # Absolute: Hayabusa runs with a temp-dir cwd, so a relative path would miss.
     target = Path(path).expanduser().resolve()
+    # Before the existence check, so the error does not reveal whether a path
+    # outside the roots exists.
+    check_allowed(target)
     if not target.exists():
         raise ToolError(f"No such file or directory: {path}")
 
@@ -371,6 +556,8 @@ def scan_evtx(
             unknown_levels.add(str(finding.get("Level", "")))
         elif RANK[level] < floor:
             continue
+        if term and not rule_matches(finding, term):
+            continue
         key = level or "unknown"
         counts[key] = counts.get(key, 0) + 1
         kept.append(finding)
@@ -394,10 +581,26 @@ def scan_evtx(
             "the log is clean."
         )
 
-    return {
+    # Over the limit, keep the most severe (unknown levels rank highest, as
+    # they are never dropped). A plain head-of-list cut would return the
+    # earliest informational noise and hide the highs.
+    returned = kept
+    if len(kept) > limit:
+        def severity(f: dict[str, Any]) -> int:
+            level = normalize_level(f.get("Level", ""))
+            return RANK[level] if level else len(RANK)
+        returned = sorted(kept, key=lambda f: -severity(f))[:limit]
+    # Hayabusa orders a directory scan file by file, not globally by time.
+    # `--utc` timestamps share one format, so they sort as strings.
+    returned = sorted(returned, key=lambda f: str(f.get("Timestamp", "")))
+
+    result: dict[str, Any] = {
         "target": str(target),
         "backend": backend,
         "min_severity": min_severity,
+        "rule_filter": term or None,
+        "output_format": output_format,
+        "max_results": limit,
         "events_scanned": total,
         "events_with_hits": hits,
         "finding_count": len(kept),
@@ -406,10 +609,16 @@ def scan_evtx(
             for lvl in [*reversed(SEVERITY_ORDER), "unknown"]
             if lvl in counts
         },
-        "findings": kept[:MAX_FINDINGS],
-        "truncated": len(kept) > MAX_FINDINGS,
-        "warnings": warnings,
     }
+    if output_format == "summary":
+        # The rollup covers every matching detection, not just those returned.
+        result["rules"] = _summarize_rules(kept)
+        result["findings"] = [_slim(f) for f in returned]
+    else:
+        result["findings"] = returned
+    result["truncated"] = len(kept) > len(returned)
+    result["warnings"] = warnings
+    return result
 
 
 def main() -> None:
